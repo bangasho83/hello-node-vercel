@@ -5,8 +5,9 @@ const axios = require("axios");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(express.json()); // Middleware to parse JSON
 
+// 🟢 This is the missing /chat route!
 app.post("/chat", async (req, res) => {
     const userMessage = req.body.message;
 
@@ -31,8 +32,14 @@ app.post("/chat", async (req, res) => {
 
         res.json({ reply: response.data.choices[0].message.content });
     } catch (error) {
+        console.error("Error:", error.response ? error.response.data : error.message);
         res.status(500).json({ error: "Something went wrong" });
     }
+});
+
+// Default route
+app.get("/", (req, res) => {
+    res.send("Hello, this is your ChatGPT API app!");
 });
 
 app.listen(port, () => {
