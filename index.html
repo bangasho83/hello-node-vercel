@@ -42,4 +42,11 @@
             chatbox.innerHTML += `<div class="message bot"><b>GPT:</b> ${reply}</div>`;
 
             // Clear input field
-            document.getElementById("userInput").value 
+            document.getElementById("userInput").value = "";
+
+            // Auto-scroll
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
