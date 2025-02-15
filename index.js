@@ -6,27 +6,16 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json()); // Middleware to parse JSON
-app.use(express.static("public")); // Serve static files (HTML, CSS, JS)
+// Serve static files from the "public" folder
+app.use(express.static("public"));
 
-// Serve the HTML page at the root URL
+// Serve index.html for the root URL
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Rate limiting to prevent too many requests
-let lastRequestTime = 0;
-const requestCooldown = 3000; // 3 seconds cooldown
-
 // ChatGPT API endpoint
 app.post("/chat", async (req, res) => {
-    const now = Date.now();
-    if (now - lastRequestTime < requestCooldown) {
-        return res.status(429).json({ error: "Too many requests. Please wait a few seconds." });
-    }
-
-    lastRequestTime = now;
-
     const userMessage = req.body.message;
     if (!userMessage) {
         return res.status(400).json({ error: "Message is required" });
@@ -36,9 +25,9 @@ app.post("/chat", async (req, res) => {
         const response = await axios.post(
             "https://api.openai.com/v1/chat/completions",
             {
-                model: "gpt-3.5-turbo-1106", // More optimized version
+                model: "gpt-3.5-turbo-1106",
                 messages: [{ role: "user", content: userMessage }],
-                max_tokens: 50 // Limit response length
+                max_tokens: 50
             },
             {
                 headers: {
