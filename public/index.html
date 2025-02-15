@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple ChatGPT</title>
+    <title>ChatGPT Browser Chat</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
         input, button { padding: 10px; font-size: 16px; }
-        #chatbox { width: 80%; max-width: 600px; margin: auto; text-align: left; border: 1px solid #ddd; padding: 10px; height: 300px; overflow-y: auto; }
+        #chatbox { width: 90%; max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 10px; height: 300px; overflow-y: auto; }
         .message { padding: 5px; margin: 5px 0; }
         .user { text-align: right; color: blue; }
         .bot { text-align: left; color: green; }
@@ -42,4 +42,11 @@
             chatbox.innerHTML += `<div class="message bot"><b>GPT:</b> ${reply}</div>`;
 
             // Clear input field
-            document.getElementById("userInput").value 
+            document.getElementById("userInput").value = "";
+
+            // Auto-scroll
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
